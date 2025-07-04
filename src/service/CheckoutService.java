@@ -22,22 +22,22 @@ public class CheckoutService {
     private double amount=0;
 
 
-    private  Map<Shippable,Long> shippableItemsCount=new HashMap<>();
-    private  Map<Product,Long> allItemsCount=new HashMap<>();
+    private  Map<Shippable,Integer> shippableItemsCount=new HashMap<>();
+    private  Map<Product,Integer> allItemsCount=new HashMap<>();
 
     public void checkout(Customer customer){
         this.customer=customer;
         Cart customerCart=customer.getCustomerCart();
-        Map<Product, Long> cartItems=customerCart.getCartItems();
+        Map<Product, Integer> cartItems=customerCart.getCartItems();
 
         // First check if the cart is empty
         if(customerCart.isEmpty()){
             throw new EmptyCartException("Chekout failed:The cart is empty");
         }
 
-        for(Map.Entry<Product,Long> item:cartItems.entrySet()){
+        for(Map.Entry<Product,Integer> item:cartItems.entrySet()){
             Product product=item.getKey();
-            Long quantity=item.getValue();
+            int quantity=item.getValue();
 
             // Second check if the product is Expired
             if(product instanceof PhysicalExpirable){
@@ -48,12 +48,12 @@ public class CheckoutService {
 
             if(product instanceof Shippable){
                 shippableItemsCount.put((Shippable)product
-                        ,shippableItemsCount.getOrDefault((Shippable)product,0L)+quantity);
+                        ,shippableItemsCount.getOrDefault((Shippable)product,0)+quantity);
                 shippingCost+=Shippable.shippingCost*quantity;
             }
 
             allItemsCount.put(product
-                    ,allItemsCount.getOrDefault(product,0L)+quantity);
+                    ,allItemsCount.getOrDefault(product,0)+quantity);
 
 
             subTotal+=product.getPrice()*quantity;
@@ -67,7 +67,7 @@ public class CheckoutService {
     public void printCheckout(){
         // Third check if total Amount is greater than the customer balance
         if(amount>customer.getBalance())
-            throw new InsufficientBalanceException("Chekout failed:The total cost is greater than the Your balance");
+            throw new InsufficientBalanceException("Chekout failed:The total cost is greater than Your balance");
 
         customer.subtractBalance(amount);
 
@@ -77,18 +77,18 @@ public class CheckoutService {
         System.out.println("\n** Checkout Notice **");
 
 
-        for(Map.Entry<Product,Long> item:allItemsCount.entrySet()) {
+        for(Map.Entry<Product,Integer> item:allItemsCount.entrySet()) {
 
             Product product=item.getKey();
-            Long quantity=item.getValue();
+            int quantity=item.getValue();
             System.out.printf("%dx %-15s %.0f%n", quantity, product.getName(), product.getPrice() * quantity);
             product.reduceQuantity(quantity);
         }
-        System.out.println("--------------------");
+        System.out.println("--------------------------------------");
         System.out.printf("%-18s %.0f%n", "Subtotal", subTotal);
         System.out.printf("%-18s %.0f%n", "Shipping", shippingCost);
         System.out.printf("%-18s %.0f%n", "Amount", amount);
-        System.out.println("--------------------");
+        System.out.println("--------------------------------------");
         System.out.printf("Customer Balance: %.2f%n", customer.getBalance());
 
     }

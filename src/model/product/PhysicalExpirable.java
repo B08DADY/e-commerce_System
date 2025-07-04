@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 public class PhysicalExpirable extends Product implements Expirable, Shippable {
     private double weight;
-    private LocalDate expiryDate;
-    public PhysicalExpirable( String name, double price, Long quantity, double weight, LocalDate expiryDate){
+    private final LocalDate expiryDate;
+    public PhysicalExpirable( String name, double price, int quantity, double weight, LocalDate expiryDate){
         super(name, price, quantity);
         this.weight = weight;
         this.expiryDate = expiryDate;

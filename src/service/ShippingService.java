@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ShippingService {
     private double totalWeight=0;
-    public ShippingService(Map<Shippable,Long> shippableItems){
+    public ShippingService(Map<Shippable,Integer> shippableItems){
         if(shippableItems.isEmpty()||shippableItems==null) {
             System.out.println("There are no items to ship");
             return;
@@ -17,13 +17,13 @@ public class ShippingService {
         System.out.println("\n** Shipment Notice **");
 
 
-        for(Map.Entry<Shippable,Long> entry:shippableItems.entrySet()){
+        for(Map.Entry<Shippable,Integer> entry:shippableItems.entrySet()){
             Shippable product=entry.getKey();
-            Long quantity=entry.getValue();
+            int quantity=entry.getValue();
             double itemWeightValue=product.getWeight();
             double totalItemWeight=itemWeightValue*quantity;
 
-            // assume that the weight is in kg
+            // let's assume that the weight is in kg
             System.out.printf("%dx %-15s %.0fg%n", quantity, product.getName(), totalItemWeight * 1000);
             totalWeight+=totalItemWeight;
         }
