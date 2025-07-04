@@ -65,7 +65,7 @@ public class CheckoutService {
 
     }
     public void printCheckout(){
-        // Third check if total Amount is greater than the customer balance
+        // Third check if total Amount is greater than the customer balnce
         if(amount>customer.getBalance())
             throw new InsufficientBalanceException("Chekout failed:The total cost is greater than Your balance");
 
