@@ -1,10 +1,11 @@
 package model.product;
 
 import model.interfaces.Expirable;
+import model.interfaces.Shippable;
 
 import java.util.Date;
 
-public class PhysiclaExpirable extends Product implements Expirable {
+public class PhysiclaExpirable extends Product implements Expirable, Shippable {
     private double weight;
     private Date expiryDate;
     public PhysiclaExpirable( String name, double price, int quantity, double weight, Date expiryDate){
@@ -21,6 +22,9 @@ public class PhysiclaExpirable extends Product implements Expirable {
     }
     public Date getExpiryDate() {
         return expiryDate;
+    }
+    public String getName() {
+        return getName();
     }
 
 
