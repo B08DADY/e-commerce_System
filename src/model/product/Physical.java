@@ -6,7 +6,7 @@ public class Physical extends Product implements Shippable {
     private double weight;
 
 
-    public Physical(String name, double price, int quantity,double weight) {
+    public Physical(String name, double price, Long quantity,double weight) {
         super(name, price, quantity);
         this.weight = weight;
     }

@@ -3,29 +3,26 @@ package model.product;
 import model.interfaces.Expirable;
 import model.interfaces.Shippable;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class PhysiclaExpirable extends Product implements Expirable, Shippable {
+
+public class PhysicalExpirable extends Product implements Expirable, Shippable {
     private double weight;
-    private Date expiryDate;
-    public PhysiclaExpirable( String name, double price, int quantity, double weight, Date expiryDate){
+    private LocalDate expiryDate;
+    public PhysicalExpirable( String name, double price, Long quantity, double weight, LocalDate expiryDate){
         super(name, price, quantity);
         this.weight = weight;
         this.expiryDate = expiryDate;
     }
     @Override
     public boolean isExpired() {
-        return new Date().after(expiryDate);
+        return LocalDate.now().isAfter(this.expiryDate);
     }
     public double getWeight() {
         return weight;
     }
-    public Date getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
-    public String getName() {
-        return getName();
-    }
-
 
 }

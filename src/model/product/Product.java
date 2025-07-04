@@ -3,14 +3,14 @@ package model.product;
 public abstract class Product {
     private String name;
     private double price;
-    private int quantity;
+    private Long quantity;
 
-    public Product(String name, double price, int quantity){
+    public Product(String name, double price, Long quantity){
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
-    public int getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
@@ -30,7 +30,7 @@ public abstract class Product {
         this.price = price;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
@@ -38,7 +38,7 @@ public abstract class Product {
         return this.quantity >= requiredQuantity;
     }
 
-    public  void reduceQuantity(int requiredQuantity){
+    public  void reduceQuantity(Long requiredQuantity){
         this.quantity -= requiredQuantity;
     }
 }
